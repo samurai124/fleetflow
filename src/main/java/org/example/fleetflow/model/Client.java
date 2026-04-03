@@ -1,6 +1,7 @@
 package org.example.fleetflow.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -32,4 +35,13 @@ public class Client {
     @NotBlank(message = "Le numéro de téléphone est obligatoire")
     @Size(min = 5 , max = 10 , message = "Le numéro de téléphone doit contenir entre 10 et 15 chiffres")
     private String telephone;
+
+    @OneToMany(mappedBy = "client")
+    @JsonIgnore
+    List<Livraison> livraisons;
+
+
+
+
+
 }
