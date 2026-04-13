@@ -3,6 +3,8 @@ package org.example.fleetflow.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +22,14 @@ public class Chauffeur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NotBlank(message = "Le nom est obligatoire")
     private String nom;
+
+    @NotBlank(message = "Le permis type est obligatoire")
     private String permisType;
+
+    @NotNull(message = "Le champ disponible doit être défini")
     private boolean disponible;
 
     @OneToMany(mappedBy = "chauffeur")

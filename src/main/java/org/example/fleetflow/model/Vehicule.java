@@ -23,6 +23,7 @@ public class Vehicule {
     private String matricule;
     private String type ;
     private Double capacite;
+    @Enumerated(EnumType.STRING)
     private Statutvehicule statut;
 
     @OneToMany(mappedBy = "vehicule")
