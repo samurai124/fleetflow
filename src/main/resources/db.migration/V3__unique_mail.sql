@@ -1,0 +1,2 @@
+-- Migration V3: Reserved for future unique email constraint on client table
+-- Placeholder for potential future changes
