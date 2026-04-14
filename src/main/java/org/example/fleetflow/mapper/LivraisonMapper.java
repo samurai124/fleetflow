@@ -1,6 +1,7 @@
 package org.example.fleetflow.mapper;
 
-import org.example.fleetflow.dto.LivraisonDTO;
+import org.example.fleetflow.dto.LivraisonRequestDTO;
+import org.example.fleetflow.dto.LivraisonResponseDTO;
 import org.example.fleetflow.model.Livraison;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,14 +12,14 @@ public interface LivraisonMapper {
     @Mapping(source = "client.id", target = "clientId")
     @Mapping(source = "vehicule.id", target = "vehiculeId")
     @Mapping(source = "chauffeur.id", target = "chauffeurId")
-    LivraisonDTO ToDTO(Livraison livraison);
+    LivraisonResponseDTO ToDTO(Livraison livraison);
 
     @Mapping(target = "client", ignore = true)
     @Mapping(target = "vehicule", ignore = true)
     @Mapping(target = "chauffeur", ignore = true)
-    Livraison ToMapping(LivraisonDTO livraisonDTO);
+    Livraison ToMapping(LivraisonRequestDTO livraisonRequestDTO);
 
-    List<LivraisonDTO> ToDTOs(List<Livraison> livraisonList);
+    List<LivraisonResponseDTO> ToDTOs(List<Livraison> livraisonList);
 
 
 }

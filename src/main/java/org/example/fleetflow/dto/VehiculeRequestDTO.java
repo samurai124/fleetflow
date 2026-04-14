@@ -1,24 +1,21 @@
-package org.example.fleetflow.model;
+package org.example.fleetflow.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import org.example.fleetflow.Enums.Statutvehicule;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Vehicule {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class VehiculeRequestDTO {
+
     private Long id;
     @NotBlank(message = "Matricule est obligatoire")
     private String matricule;
@@ -31,9 +28,5 @@ public class Vehicule {
 
     @Enumerated(EnumType.STRING)
     private Statutvehicule statut;
-
-    @OneToMany(mappedBy = "vehicule")
-    @JsonIgnore
-    List<Livraison> livraisons;
 
 }

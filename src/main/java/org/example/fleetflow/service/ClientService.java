@@ -52,4 +52,8 @@ public class ClientService {
         }
     }
 
+    public Boolean mailExists(String email) {
+        return clientRepository.existsByEmail(email);
+    }
+
 }

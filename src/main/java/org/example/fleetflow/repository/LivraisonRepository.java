@@ -1,6 +1,7 @@
 package org.example.fleetflow.repository;
 
 import org.example.fleetflow.Enums.StatutLivraison;
+import org.example.fleetflow.model.Chauffeur;
 import org.example.fleetflow.model.Livraison;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +17,11 @@ public interface LivraisonRepository extends JpaRepository <Livraison,Long> {
     List<Livraison> findByStatut(StatutLivraison statut);
 
     List<Livraison> findByClientId(Long clientId);
+
+    List<Livraison> findByChauffeurId(Long chauffeurId);
+
+    Long countLivraisonsByChauffeurId(Long id);
+    
 
     @Query("SELECT l FROM Livraison l WHERE l.dateLivraison BETWEEN :dateDebut AND :dateFin")
     List<Livraison> findLivraisonsEntreDates(

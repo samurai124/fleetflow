@@ -19,7 +19,6 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-@Table(name = "clients")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,15 +32,12 @@ public class Client {
     private String email;
 
     @NotBlank(message = "Le numéro de téléphone est obligatoire")
-    @Size(min = 5 , max = 10 , message = "Le numéro de téléphone doit contenir entre 10 et 15 chiffres")
+    @Size(min = 10 , max = 15 , message = "Le numéro de téléphone doit contenir entre 10 et 15 chiffres")
     private String telephone;
 
     @OneToMany(mappedBy = "client")
     @JsonIgnore
     List<Livraison> livraisons;
-
-
-
 
 
 }

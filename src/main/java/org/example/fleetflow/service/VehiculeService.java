@@ -1,7 +1,8 @@
 package org.example.fleetflow.service;
 
-import org.example.fleetflow.dto.VehiculeDTO;
+import org.example.fleetflow.dto.VehiculeRequestDTO;
 import org.example.fleetflow.Enums.Statutvehicule;
+import org.example.fleetflow.dto.VehiculeResponseDTO;
 import org.example.fleetflow.mapper.VehiculeMapper;
 import org.example.fleetflow.model.Vehicule;
 import org.example.fleetflow.repository.VehiculeRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class VehiculeService {
@@ -19,32 +21,35 @@ public class VehiculeService {
     @Autowired
     VehiculeMapper vehiculeMapper;
 
-    public List<VehiculeDTO> getAllVehicules() {
+    public List<VehiculeResponseDTO> getAllVehicules() {
+//        Long total = vehiculeRepository.count();
 //        return vehiculeRepository.findAll()
 //                .stream()
-//                .map(vehiculeMapper::toDTO)
+//                .map(vehicule ->{ var test = vehiculeMapper.toDTO(vehicule);
+//                test.setTotal(total);
+//                return test;})
 //                .collect(Collectors.toList());
         return vehiculeMapper.toDTOs(vehiculeRepository.findAll());
     }
 
-    public VehiculeDTO getVehiculeById(Long id) {
+    public VehiculeResponseDTO getVehiculeById(Long id) {
         Vehicule vehicule = vehiculeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Véhicule non trouvé avec id : " + id));
         return vehiculeMapper.toDTO(vehicule);
     }
 
-    public VehiculeDTO createVehicule(VehiculeDTO vehiculeDTO) {
-        Vehicule vehicule = vehiculeMapper.toEntity(vehiculeDTO);
+    public VehiculeResponseDTO createVehicule(VehiculeRequestDTO vehiculeRequestDTO) {
+        Vehicule vehicule = vehiculeMapper.toEntity(vehiculeRequestDTO);
         return vehiculeMapper.toDTO(vehiculeRepository.save(vehicule));
     }
 
-    public VehiculeDTO updateVehicule(Long id, VehiculeDTO vehiculeDTO) {
+    public VehiculeResponseDTO updateVehicule(Long id, VehiculeRequestDTO vehiculeRequestDTO) {
         Vehicule existing = vehiculeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Véhicule non trouvé avec id : " + id));
-        existing.setMatricule(vehiculeDTO.getMatricule());
-        existing.setType(vehiculeDTO.getType());
-        existing.setCapacite(vehiculeDTO.getCapacite());
-        existing.setStatut(vehiculeDTO.getStatut());
+        existing.setMatricule(vehiculeRequestDTO.getMatricule());
+        existing.setType(vehiculeRequestDTO.getType());
+        existing.setCapacite(vehiculeRequestDTO.getCapacite());
+        existing.setStatut(vehiculeRequestDTO.getStatut());
         return vehiculeMapper.toDTO(vehiculeRepository.save(existing));
     }
 
@@ -55,7 +60,7 @@ public class VehiculeService {
         vehiculeRepository.deleteById(id);
     }
 
-    public List<VehiculeDTO> getVehiculesDisponibles() {
+    public List<VehiculeResponseDTO> getVehiculesDisponibles() {
 //        return vehiculeRepository.findByStatut(Statutvehicule.Disponible)
 //                .stream()
 //                .map(vehiculeMapper::toDTO)
@@ -63,7 +68,7 @@ public class VehiculeService {
         return vehiculeMapper.toDTOs(vehiculeRepository.findByStatut(Statutvehicule.Disponible));
     }
 
-    public List<VehiculeDTO> getVehiculesParCapacite(Double capacite) {
+    public List<VehiculeResponseDTO> getVehiculesParCapacite(Double capacite) {
 
         return vehiculeMapper.toDTOs(vehiculeRepository.findByCapaciteGreaterThan(capacite));
     }
