@@ -6,11 +6,15 @@ import org.example.fleetflow.dto.ChauffeurResponseDTO;
 import org.example.fleetflow.mapper.ChauffeurMapper;
 import org.example.fleetflow.model.Chauffeur;
 import org.example.fleetflow.repository.ChauffeurRepository;
+import org.example.fleetflow.repository.LivraisonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+
 
 @Service
 public class ChauffeurService {
@@ -21,6 +25,10 @@ public class ChauffeurService {
     @Autowired
     ChauffeurMapper chauffeurMapper;
 
+    @Autowired
+    LivraisonRepository livraisonRepository;
+
+
     @Transactional
     public ChauffeurResponseDTO ajouterChauffeur(ChauffeurRequestDTO chauffeurDTO){
         Chauffeur chauffeur =  chauffeurMapper.toEntity(chauffeurDTO);
@@ -28,7 +36,15 @@ public class ChauffeurService {
     }
 
     public List<ChauffeurResponseDTO> listerChauffeur(){
-        return chauffeurMapper.todtolist(chauffeurRepository.findAll());
+
+        return chauffeurRepository.findAll()
+                .stream()
+                .map(v-> {
+                    var dto = chauffeurMapper.toDto(v);
+                    dto.setLivraisonsCount(livraisonRepository.countLivraisonsByChauffeurId(v.getId()));
+                    return dto;})
+                .collect(Collectors.toList());
+//                return chauffeurMapper.todtolist(chauffeurRepository.findAll());
     }
 
     public ChauffeurResponseDTO getChauffeur(long id){

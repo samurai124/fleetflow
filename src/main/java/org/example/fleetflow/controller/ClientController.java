@@ -22,12 +22,12 @@ public class ClientController {
 
 
     @GetMapping
-    public List<ClientResponseDTO> listerClients() {
+    public List<ClientResponseDTO> listerClients()
+    {
         return clientService.listerClients();
     }
 
     @GetMapping("/{id}")
-
     public ResponseEntity<?> getClient(
             @PathVariable long id
     ){
