@@ -22,9 +22,9 @@ public class ClientRequestDTO {
     @Email(message = "Format d'email invalide")
     private String email;
 
-    @NotBlank(message = "Le numéro de téléphone est obligatoire")
-    @Size(min = 10 , max = 15 , message = "Le numéro de téléphone doit contenir entre 10 et 15 chiffres")
-    private String telephone;
+    //@NotBlank(message = "Le numéro de téléphone est obligatoire")
+   // @Size(min = 10 , max = 15 , message = "Le numéro de téléphone doit contenir entre 10 et 15 chiffres")
+    private int telephone;
 
 
 }

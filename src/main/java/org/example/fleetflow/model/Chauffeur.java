@@ -29,7 +29,7 @@ public class Chauffeur {
     private String nom;
 
     @NotBlank(message = "Le permis type est obligatoire")
-    private String permisType;
+    protected String permisType;
 
     @NotNull(message = "Le champ disponible doit être défini")
     private boolean disponible;
@@ -37,6 +37,23 @@ public class Chauffeur {
     @OneToMany(mappedBy = "chauffeur")
     @JsonIgnore
     List<Livraison> livraisons;
+
+
+
+
+    public Chauffeur(String permisType){
+        this();
+        this.permisType = permisType;
+    }
+
+    public String getPermisType(){
+        return this.permisType;
+    }
+
+    public void setPermisType(String permisType){
+        this.permisType = permisType;
+    }
+
 
 
 

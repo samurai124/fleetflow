@@ -40,6 +40,8 @@ public class ClientController {
         return ResponseEntity.ok(client);
     }
 
+
+
     @PostMapping
     public ResponseEntity<ClientResponseDTO> ajouterClient(
             @Valid
@@ -48,6 +50,13 @@ public class ClientController {
         ClientResponseDTO clientResponse = clientService.ajouterClient(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(clientResponse);
     }
+
+
+
+
+
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<ClientResponseDTO> editerClient(
