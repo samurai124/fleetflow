@@ -1,4 +1,4 @@
-CREATE TABLE client (
+CREATE TABLE clients (
                         id BIGINT PRIMARY KEY AUTO_INCREMENT,
                         nom VARCHAR(100) NOT NULL,
                         email VARCHAR(150) NOT NULL UNIQUE,
