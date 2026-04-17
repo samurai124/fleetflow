@@ -1,0 +1,42 @@
+services:
+  # --- SERVICE BASE DE DONNÉES (MySQL) ---
+  mysql-db:
+    image: mysql:8.0
+    container_name: fleetflow-mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: fleetflow_db
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - fleetflow_data:/var/lib/mysql
+    networks:
+      - fleetflow-network
+
+  # --- SERVICE APPLICATION (Spring Boot) ---
+  fleetflow-app:
+    build: .
+    container_name: fleetflow-backend
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-db
+    environment:
+      # On utilise le nom du service 'mysql-db' comme hôte
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/fleetflow_db?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
+    networks:
+      - fleetflow-network
+
+# --- DÉFINITION DES RÉSEAUX ---
+networks:
+  fleetflow-network:
+    driver: bridge
+
+# --- DÉFINITION DES VOLUMES PERSISTANTS ---
+volumes:
+  fleetflow_data:
