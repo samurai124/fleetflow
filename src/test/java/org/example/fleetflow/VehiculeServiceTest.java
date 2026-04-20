@@ -85,7 +85,6 @@ public class VehiculeServiceTest {
 
         assertNotNull(result);
         assertEquals(vehiculeDtos,result);
-
     }
 
 
