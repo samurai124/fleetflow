@@ -1,0 +1,1 @@
+ALTER TABLE client MODIFY telephone Integer ;

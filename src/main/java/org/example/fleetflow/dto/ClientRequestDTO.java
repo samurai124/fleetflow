@@ -24,7 +24,7 @@ public class ClientRequestDTO {
 
     @NotBlank(message = "Le numéro de téléphone est obligatoire")
     @Size(min = 10 , max = 15 , message = "Le numéro de téléphone doit contenir entre 10 et 15 chiffres")
-    private String telephone;
+    private Integer telephone;
 
 
 }

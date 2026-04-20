@@ -38,6 +38,15 @@ public class Chauffeur {
     @JsonIgnore
     List<Livraison> livraisons;
 
+  public Chauffeur ( String permisType){
+      this.permisType = permisType;
+  }
 
+  public String getPermiType(){
+      return permisType;
+  }
+  public void setPermiType(String permisType){
+      this.permisType =permisType;
+  }
 
 }
