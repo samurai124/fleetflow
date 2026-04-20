@@ -2,7 +2,8 @@ package org.example.fleetflow;
 
 import org.example.fleetflow.Enums.StatutLivraison;
 import org.example.fleetflow.Enums.Statutvehicule;
-import org.example.fleetflow.dto.LivraisonDTO;
+import org.example.fleetflow.dto.LivraisonRequestDTO;
+import org.example.fleetflow.dto.LivraisonResponseDTO;
 import org.example.fleetflow.mapper.LivraisonMapper;
 import org.example.fleetflow.model.Chauffeur;
 import org.example.fleetflow.model.Client;
@@ -13,7 +14,6 @@ import org.example.fleetflow.repository.ClientRepository;
 import org.example.fleetflow.repository.LivraisonRepository;
 import org.example.fleetflow.repository.VehiculeRepository;
 import org.example.fleetflow.service.LivraisonService;
-import org.example.fleetflow.service.VehiculeService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,6 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -64,7 +63,7 @@ public class LivraisonServiceTest {
         clientEntity.setId(1L);
         clientEntity.setNom("Hamza");
         clientEntity.setEmail("Hamza@mail.com");
-        clientEntity.setTelephone("000000");
+        clientEntity.setTelephone(10000);
 
 
         Livraison livraison = new Livraison();
@@ -75,11 +74,18 @@ public class LivraisonServiceTest {
         livraison.setClient(clientEntity);
 
 
-        LivraisonDTO livraisonRequest = new LivraisonDTO();
+        LivraisonRequestDTO livraisonRequest = new LivraisonRequestDTO();
         livraisonRequest.setDateLivraison(LocalDate.parse("2026-04-14"));
         livraisonRequest.setAdresseDepart("depart");
         livraisonRequest.setAdresseDestination("destination");
         livraisonRequest.setClientId(1L);
+
+
+        LivraisonResponseDTO livraisonResponse = new LivraisonResponseDTO();
+        livraisonResponse.setDateLivraison(LocalDate.parse("2026-04-14"));
+        livraisonResponse.setAdresseDepart("depart");
+        livraisonResponse.setAdresseDestination("destination");
+        livraisonResponse.setClientId(1L);
 
 
 
@@ -91,17 +97,17 @@ public class LivraisonServiceTest {
         when(livraisonRepository.save(any(Livraison.class)))
                 .thenReturn(livraison);
 
-        when(livraisonMapper.ToMapping(any(LivraisonDTO.class))).thenReturn(livraison);
+        when(livraisonMapper.ToMapping(any(LivraisonRequestDTO.class))).thenReturn(livraison);
 
 
         when(livraisonMapper.ToDTO(argThat(l -> l.getStatut() == StatutLivraison.ENATTENTE)))
-                .thenReturn(livraisonRequest);
+                .thenReturn(livraisonResponse);
 
 
 
-        LivraisonDTO livraisonResponse = livraisonService.createLivraison(livraisonRequest);
+        LivraisonResponseDTO livraisonResponseResult = livraisonService.createLivraison(livraisonRequest);
 
-        assertEquals(livraisonRequest,livraisonResponse);
+        assertEquals(livraisonResponse,livraisonResponseResult);
     }
 
 
@@ -119,7 +125,7 @@ public class LivraisonServiceTest {
         Client client = new Client(1L,
                 "Client",
                 "Client@mail.com",
-                "000000",
+                10000,
                 new ArrayList<>());
 
 
@@ -144,7 +150,7 @@ public class LivraisonServiceTest {
         );
 
 
-        LivraisonDTO livraisonDTO = new LivraisonDTO(
+        LivraisonRequestDTO livraisonDTO = new LivraisonRequestDTO(
                 1L,
                 LocalDate.parse("2026-04-14"),
                 "depart",
@@ -152,22 +158,34 @@ public class LivraisonServiceTest {
                 StatutLivraison.ENCOURS,
                 client.getId(),
                 vehicule.getId(),
-                chauffeur.getId()
+                chauffeur.getId(),
+                10L
+        );
+
+        LivraisonResponseDTO livraisonResponse = new LivraisonResponseDTO(
+                LocalDate.parse("2026-04-14"),
+                "depart",
+                "destination",
+                StatutLivraison.ENCOURS,
+                client.getId(),
+                vehicule.getId(),
+                chauffeur.getId(),
+                10L
         );
 
         when(livraisonRepository.findById(any(Long.class))).thenReturn(Optional.of(livraison));
-        when(livraisonMapper.ToDTO(argThat(l-> l.getStatut() == StatutLivraison.LIVREE))).thenReturn(livraisonDTO);
+        when(livraisonMapper.ToDTO(argThat(l-> l.getStatut() == StatutLivraison.LIVREE))).thenReturn(livraisonResponse);
         when(chauffeurRepository.save(any())).thenReturn(chauffeur);
         when(vehiculeRepository.save(any())).thenReturn(vehicule);
         when(livraisonRepository.save(any(Livraison.class))).thenReturn(livraison);
 
 
-        LivraisonDTO result = livraisonService.modifierStatus(1L,StatutLivraison.LIVREE);
+        LivraisonResponseDTO result = livraisonService.modifierStatus(1L,StatutLivraison.LIVREE);
 
 
 
         assertNotNull(result);
-        assertEquals(livraisonDTO,result);
+        assertEquals(livraisonResponse,result);
     }
 
 
@@ -186,7 +204,7 @@ public class LivraisonServiceTest {
         Client client = new Client(1L,
                 "Client",
                 "Client@mail.com",
-                "000000",
+                10000,
                 new ArrayList<>());
 
 
@@ -211,7 +229,7 @@ public class LivraisonServiceTest {
         );
 
 
-        LivraisonDTO livraisonDTO = new LivraisonDTO(
+        LivraisonRequestDTO livraisonDTO = new LivraisonRequestDTO(
                 1L,
                 LocalDate.parse("2026-04-14"),
                 "depart",
@@ -219,22 +237,33 @@ public class LivraisonServiceTest {
                 StatutLivraison.ENCOURS,
                 client.getId(),
                 vehicule.getId(),
-                chauffeur.getId()
+                chauffeur.getId(),
+                10L
         );
 
+        LivraisonResponseDTO livraisonResponseDTO = new LivraisonResponseDTO(
+                LocalDate.parse("2026-04-14"),
+                "depart",
+                "destination",
+                StatutLivraison.ENCOURS,
+                client.getId(),
+                vehicule.getId(),
+                chauffeur.getId(),
+                10L
+        );
 
         when(livraisonRepository.findById(any(Long.class))).thenReturn(Optional.of(livraison));
         when(chauffeurRepository.findById(any(Long.class))).thenReturn(Optional.of(chauffeur));
         when(vehiculeRepository.findById(any(Long.class))).thenReturn(Optional.of(vehicule));
         when(chauffeurRepository.save(any(Chauffeur.class))).thenReturn(chauffeur);
         when(vehiculeRepository.save(any(Vehicule.class))).thenReturn(vehicule);
-        when(livraisonMapper.ToDTO(argThat(l-> l.getChauffeur() == chauffeur))).thenReturn(livraisonDTO);
+        when(livraisonMapper.ToDTO(argThat(l-> l.getChauffeur() == chauffeur))).thenReturn(livraisonResponseDTO);
         when(livraisonRepository.save(any(Livraison.class))).thenReturn(livraison);
 
-        LivraisonDTO result = livraisonService.assignerChauffeurEtVehicule(1L,1L,1L);
+        LivraisonResponseDTO result = livraisonService.assignerChauffeurEtVehicule(1L,1L,1L);
 
         assertNotNull(result);
-        assertEquals(livraisonDTO,result);
+        assertEquals(livraisonResponseDTO,result);
 
     }
 
