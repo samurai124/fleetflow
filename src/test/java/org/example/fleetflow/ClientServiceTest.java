@@ -71,7 +71,7 @@ public class ClientServiceTest {
         ClientRequestDTO requestDTO = new ClientRequestDTO();
         requestDTO.setNom("Hamza");
         requestDTO.setEmail("Hamza@mail.com");
-        requestDTO.setTelephone("000000");
+        requestDTO.setTelephone(1000);
 
 
         when(clientRepository.existsClientByEmail("Hamza@mail.com")).thenReturn(true);
