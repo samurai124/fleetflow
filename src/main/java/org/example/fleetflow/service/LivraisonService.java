@@ -1,6 +1,7 @@
 package org.example.fleetflow.service;
 
-import org.example.fleetflow.dto.LivraisonDTO;
+import org.example.fleetflow.dto.LivraisonRequestDTO;
+import org.example.fleetflow.dto.LivraisonResponseDTO;
 import org.example.fleetflow.Enums.StatutLivraison;
 import org.example.fleetflow.Enums.Statutvehicule;
 import org.example.fleetflow.mapper.LivraisonMapper;
@@ -25,35 +26,31 @@ public class LivraisonService {
     LivraisonMapper livraisonMapper;
 
     @Autowired
-
     LivraisonRepository livraisonRepository;
 
     @Autowired
-
     ClientRepository clientRepository;
 
     @Autowired
-
     ChauffeurRepository chauffeurRepository;
 
     @Autowired
-
     VehiculeRepository vehiculeRepository;
 
-    public List<LivraisonDTO> getAllLivraison() {
+    public List<LivraisonResponseDTO> getAllLivraison() {
         return livraisonMapper.ToDTOs(livraisonRepository.findAll());
     }
 
-    public LivraisonDTO createLivraison(LivraisonDTO livraisonDTO){
-        Livraison livraison = livraisonMapper.ToMapping(livraisonDTO);
-        Client client = clientRepository.findById(livraisonDTO.getClientId())
+    public LivraisonResponseDTO createLivraison(LivraisonRequestDTO livraisonRequestDTO){
+        Livraison livraison = livraisonMapper.ToMapping(livraisonRequestDTO);
+        Client client = clientRepository.findById(livraisonRequestDTO.getClientId())
                 .orElseThrow(() -> new RuntimeException("Client non trouvé"));
         livraison.setClient(client);
         livraison.setStatut(StatutLivraison.ENATTENTE);
         return livraisonMapper.ToDTO(livraisonRepository.save(livraison));
     }
 
-    public LivraisonDTO assignerChauffeurEtVehicule(Long livraisonId , Long chauffeurId , Long vehiculeId){
+    public LivraisonResponseDTO assignerChauffeurEtVehicule(Long livraisonId , Long chauffeurId , Long vehiculeId){
         Livraison livraison = livraisonRepository.findById(livraisonId)
                 .orElseThrow(()-> new RuntimeException("Livraison non trouvé"));
         Chauffeur chauffeur = chauffeurRepository.findById(chauffeurId)
@@ -81,7 +78,7 @@ public class LivraisonService {
 
     }
 
-    public LivraisonDTO modifierStatus(Long id , StatutLivraison nouveauStatut){
+    public LivraisonResponseDTO modifierStatus(Long id , StatutLivraison nouveauStatut){
         Livraison livraison = livraisonRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Livraison non Trouvé"));
         livraison.setStatut(nouveauStatut);
@@ -95,19 +92,23 @@ public class LivraisonService {
         return livraisonMapper.ToDTO(livraisonRepository.save(livraison));
     }
 
-    public List<LivraisonDTO> getLivraisonParStatut(StatutLivraison statutLiv){
+    public List<LivraisonResponseDTO> getLivraisonParStatut(StatutLivraison statutLiv){
         return livraisonMapper.ToDTOs(livraisonRepository.findByStatut(statutLiv));
     }
 
-    public List<LivraisonDTO> getLivraisonParClient(Long clientId){
+    public List<LivraisonResponseDTO> getLivraisonParClient(Long clientId){
         return livraisonMapper.ToDTOs(livraisonRepository.findByClientId(clientId));
     }
 
-    public List<LivraisonDTO> getLivraisonParDate(LocalDate dateDepart, LocalDate dateFin){
+    public List<LivraisonResponseDTO> getLivraisonParChauffeur(Long id){
+        return livraisonMapper.ToDTOs(livraisonRepository.findByChauffeurId(id));
+    }
+
+    public List<LivraisonResponseDTO> getLivraisonParDate(LocalDate dateDepart, LocalDate dateFin){
         return livraisonMapper.ToDTOs(livraisonRepository.findLivraisonsEntreDates(dateDepart,dateFin));
     }
 
-    public List<LivraisonDTO> getLivraisonParVille(String ville){
+    public List<LivraisonResponseDTO> getLivraisonParVille(String ville){
         return livraisonMapper.ToDTOs(livraisonRepository.findByVilleDestination(ville));
     }
 

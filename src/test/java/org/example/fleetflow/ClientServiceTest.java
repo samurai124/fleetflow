@@ -36,18 +36,18 @@ public class ClientServiceTest {
         ClientRequestDTO requestDTO = new ClientRequestDTO();
         requestDTO.setNom("Hamza");
         requestDTO.setEmail("Hamza@mail.com");
-        requestDTO.setTelephone("000000");
+        requestDTO.setTelephone(000000);
 
 
         Client clientEntity = new Client();
         clientEntity.setNom("Hamza");
         clientEntity.setEmail("Hamza@mail.com");
-        requestDTO.setTelephone("000000");
+        requestDTO.setTelephone(000000);
 
         ClientResponseDTO expectedResponse = new ClientResponseDTO();
         expectedResponse.setNom("Hamza");
         expectedResponse.setEmail("Hamza@mail.com");
-        requestDTO.setTelephone("000000");
+        requestDTO.setTelephone(000000);
 
 
         when(clientMapper.toEntity(any(ClientRequestDTO.class))).thenReturn(clientEntity);
@@ -71,7 +71,7 @@ public class ClientServiceTest {
         ClientRequestDTO requestDTO = new ClientRequestDTO();
         requestDTO.setNom("Hamza");
         requestDTO.setEmail("Hamza@mail.com");
-        requestDTO.setTelephone("000000");
+        requestDTO.setTelephone(1000);
 
 
         when(clientRepository.existsClientByEmail("Hamza@mail.com")).thenReturn(true);

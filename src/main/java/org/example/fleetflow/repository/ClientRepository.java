@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ClientRepository extends JpaRepository<Client , Long> {
 
     boolean existsClientByEmail(String email);
+    Boolean existsByEmail(String email);
+
 }

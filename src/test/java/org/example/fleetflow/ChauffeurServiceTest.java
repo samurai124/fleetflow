@@ -44,10 +44,10 @@ public class ChauffeurServiceTest {
         );
 
         List<ChauffeurResponseDTO> chauffeursDisponibledto =  List.of(
-                new ChauffeurResponseDTO(1,"chauf1","AB",true),
-                new ChauffeurResponseDTO(2,"chauf2","B",true),
-                new ChauffeurResponseDTO(3,"chauf3","B",true),
-                new ChauffeurResponseDTO(4,"chauf4","A",true)
+                new ChauffeurResponseDTO(1,"chauf1","AB",true,10L),
+                new ChauffeurResponseDTO(2,"chauf2","B",true,10L),
+                new ChauffeurResponseDTO(3,"chauf3","B",true,10L),
+                new ChauffeurResponseDTO(4,"chauf4","A",true,10L)
         );
 
 

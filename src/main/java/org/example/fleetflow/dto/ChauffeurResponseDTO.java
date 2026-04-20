@@ -15,4 +15,6 @@ public class ChauffeurResponseDTO {
     private String nom;
     private String permisType;
     private boolean disponible;
+    private Long livraisonsCount;
+
 }

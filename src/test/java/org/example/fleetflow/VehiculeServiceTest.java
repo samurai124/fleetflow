@@ -2,7 +2,7 @@ package org.example.fleetflow;
 
 
 import org.example.fleetflow.Enums.Statutvehicule;
-import org.example.fleetflow.dto.VehiculeDTO;
+import org.example.fleetflow.dto.VehiculeResponseDTO;
 import org.example.fleetflow.mapper.VehiculeMapper;
 import org.example.fleetflow.model.Vehicule;
 import org.example.fleetflow.repository.VehiculeRepository;
@@ -43,17 +43,17 @@ public class VehiculeServiceTest {
                 new Vehicule(4L,"ABD36","VAN",100.0, Statutvehicule.Disponible,new ArrayList<>())
         );
 
-        List<VehiculeDTO> vehiculeDtos = List.of(
-                new VehiculeDTO(1L,"ABD33","VAN",100.0, Statutvehicule.Disponible),
-                new VehiculeDTO(2L,"ABD34","VAN",100.0, Statutvehicule.Disponible),
-                new VehiculeDTO(3L,"ABD35","VAN",100.0, Statutvehicule.Disponible),
-                new VehiculeDTO(4L,"ABD36","VAN",100.0, Statutvehicule.Disponible)
+        List<VehiculeResponseDTO> vehiculeDtos = List.of(
+                new VehiculeResponseDTO(1L,"ABD33","VAN",100.0, Statutvehicule.Disponible),
+                new VehiculeResponseDTO(2L,"ABD34","VAN",100.0, Statutvehicule.Disponible),
+                new VehiculeResponseDTO(3L,"ABD35","VAN",100.0, Statutvehicule.Disponible),
+                new VehiculeResponseDTO(4L,"ABD36","VAN",100.0, Statutvehicule.Disponible)
         );
 
         when(vehiculeRepository.findByStatut(Statutvehicule.Disponible)).thenReturn(vehicules);
         when(vehiculeMapper.toDTOs(vehicules)).thenReturn(vehiculeDtos);
 
-        List<VehiculeDTO> result = vehiculeService.getVehiculesDisponibles();
+        List<VehiculeResponseDTO> result = vehiculeService.getVehiculesDisponibles();
 
         assertNotNull(result);
         assertEquals(vehiculeDtos,result);
@@ -70,17 +70,17 @@ public class VehiculeServiceTest {
                 new Vehicule(4L,"ABD36","VAN",100.0, Statutvehicule.Disponible,new ArrayList<>())
         );
 
-        List<VehiculeDTO> vehiculeDtos = List.of(
-                new VehiculeDTO(1L,"ABD33","VAN",100.0, Statutvehicule.Disponible),
-                new VehiculeDTO(2L,"ABD34","VAN",100.0, Statutvehicule.Disponible),
-                new VehiculeDTO(3L,"ABD35","VAN",100.0, Statutvehicule.Disponible),
-                new VehiculeDTO(4L,"ABD36","VAN",100.0, Statutvehicule.Disponible)
+        List<VehiculeResponseDTO> vehiculeDtos = List.of(
+                new VehiculeResponseDTO(1L,"ABD33","VAN",100.0, Statutvehicule.Disponible),
+                new VehiculeResponseDTO(2L,"ABD34","VAN",100.0, Statutvehicule.Disponible),
+                new VehiculeResponseDTO(3L,"ABD35","VAN",100.0, Statutvehicule.Disponible),
+                new VehiculeResponseDTO(4L,"ABD36","VAN",100.0, Statutvehicule.Disponible)
         );
 
         when(vehiculeRepository.findByCapaciteGreaterThan(90.0)).thenReturn(vehicules);
         when(vehiculeMapper.toDTOs(vehicules)).thenReturn(vehiculeDtos);
 
-        List<VehiculeDTO> result = vehiculeService.getVehiculesParCapacite(90.0);
+        List<VehiculeResponseDTO> result = vehiculeService.getVehiculesParCapacite(90.0);
 
 
         assertNotNull(result);
