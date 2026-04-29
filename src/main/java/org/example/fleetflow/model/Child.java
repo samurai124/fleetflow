@@ -8,8 +8,8 @@ public class Child extends Chauffeur{
 
 
     @Override
-    public String getPermiType(){
-        return "hello"+super.getPermiType();
+    public String getPermisType(){
+        return "hello"+super.getPermisType();
     }
 
 }

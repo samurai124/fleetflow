@@ -37,33 +37,8 @@ public class Chauffeur {
     @OneToMany(mappedBy = "chauffeur")
     @JsonIgnore
     List<Livraison> livraisons;
-
-  public Chauffeur ( String permisType){
-      this.permisType = permisType;
-  }
-
-  public String getPermiType(){
-      return permisType;
-  }
-  public void setPermiType(String permisType){
-      this.permisType =permisType;
-  }
-
-
     public Chauffeur(String permisType){
         this();
         this.permisType = permisType;
     }
-
-    public String getPermisType(){
-        return this.permisType;
-    }
-
-    public void setPermisType(String permisType){
-        this.permisType = permisType;
-    }
-
-
-
-
 }

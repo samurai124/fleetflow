@@ -151,7 +151,6 @@ public class LivraisonServiceTest {
 
 
         LivraisonRequestDTO livraisonDTO = new LivraisonRequestDTO(
-                1L,
                 LocalDate.parse("2026-04-14"),
                 "depart",
                 "destination",
@@ -163,6 +162,7 @@ public class LivraisonServiceTest {
         );
 
         LivraisonResponseDTO livraisonResponse = new LivraisonResponseDTO(
+                1L,
                 LocalDate.parse("2026-04-14"),
                 "depart",
                 "destination",
@@ -230,7 +230,6 @@ public class LivraisonServiceTest {
 
 
         LivraisonRequestDTO livraisonDTO = new LivraisonRequestDTO(
-                1L,
                 LocalDate.parse("2026-04-14"),
                 "depart",
                 "destination",
@@ -242,6 +241,7 @@ public class LivraisonServiceTest {
         );
 
         LivraisonResponseDTO livraisonResponseDTO = new LivraisonResponseDTO(
+                1L,
                 LocalDate.parse("2026-04-14"),
                 "depart",
                 "destination",

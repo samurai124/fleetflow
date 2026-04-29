@@ -5,7 +5,7 @@ services:
     container_name: fleetflow-mysql
     restart: always
     ports:
-      - "3306:3306"
+      - "3308:3306"
     environment:
       MYSQL_DATABASE: fleetflow_db
       MYSQL_ROOT_PASSWORD: root
